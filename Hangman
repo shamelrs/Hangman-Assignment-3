@@ -1,0 +1,67 @@
+import java.util.Scanner; 
+import java.util.Random;
+
+public class Hangman { //class
+    public static void main(String args[]) {  //method
+       
+       Scanner input = new Scanner(System.in);
+       Random random = new Random();
+        
+        String secretWord = "CODING";
+        
+        int length = secretWord.length();
+        int maxAttempts = 10;
+        
+        String sub = secretWord.substring(0, 2);
+        String upper = secretWord.toUpperCase();
+        char firstLetter = secretWord.charAt(0);
+        boolean isEqual = secretWord.equals("CODING");
+        
+        System.out.println("Let's play Hangman!");
+        System.out.println("You'll have 10 incorrect attempts to enter a letter to guess the secret word.");
+        
+        boolean wordGuessed = false;    
+        int wrongGuessCount = 0;
+        String incorrectGuess = " ";
+        String userGuessHistory = "";
+        
+        System.out.print("Enter a letter: ");
+        String userGuess = input.next().toUpperCase();
+        
+        while (wrongGuessCount < maxAttempts && !wordGuessed) {
+            System.out.print("Enter a letter: ");
+            userGuess = input.next().toUpperCase();
+         
+        if (secretWord.indexOf(userGuess) == -1) { 
+            wrongGuessCount++;
+            incorrectGuess += userGuess + " ";
+            System.out.println("Try again!");
+        } else { 
+            System.out.println("Good guess!");
+        } 
+        
+        int remainingAttempts = Math.max(0, maxAttempts - wrongGuessCount);
+        
+        System.out.printf("Incorrect Guesses: %s | Remaining Attempts: %d%n", incorrectGuess, remainingAttempts);
+        }
+        
+        wordGuessed = true; 
+        for (int i = 0; i < secretWord.length(); i++) { 
+            char letter = secretWord.charAt(i);
+            if (userGuessHistory.indexOf(letter) >= 0) {
+                System.out.print(letter + " ");
+            } else {
+                System.out.print("_ ");
+                wordGuessed = false;
+        }
+    }
+    System.out.println();
+
+    if (wordGuessed) {
+        System.out.println("Congratulations! You guessed the word!");
+    } else {
+        System.out.println("Game over! The secret word was: " + secretWord);
+    }
+        input.close();
+    } 
+} 
